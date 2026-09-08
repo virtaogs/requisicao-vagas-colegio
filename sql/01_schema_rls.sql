@@ -286,10 +286,11 @@ create trigger trg_requisicoes_before_update
 alter table public.usuarios_app enable row level security;
 alter table public.requisicoes  enable row level security;
 
--- usuarios_app: cada um só vê o próprio vínculo; RH vê todo mundo.
+-- usuarios_app: cada um só vê o próprio vínculo; aprovador e RH veem todo
+-- mundo (o aprovador precisa ver o nome de quem pediu cada requisição).
 create policy usuarios_app_select on public.usuarios_app
   for select to authenticated
-  using (user_id = auth.uid() or public.is_rh(auth.uid()));
+  using (user_id = auth.uid() or public.is_aprovador(auth.uid()) or public.is_rh(auth.uid()));
 
 -- só RH cadastra/edita usuários do app (inclusive contra chamada direta de API)
 create policy usuarios_app_insert on public.usuarios_app
