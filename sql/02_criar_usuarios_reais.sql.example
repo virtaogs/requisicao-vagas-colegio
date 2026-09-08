@@ -1,0 +1,101 @@
+-- =====================================================================
+-- APP REQUISIÇÃO DE VAGAS — Colégio Atitude
+-- 02_criar_usuarios_reais.sql.example
+-- MODELO — copie para "02_PRIVADO_criar_usuarios_reais.sql" (fica de fora
+-- do git, veja .gitignore), troque as senhas e rode no SQL Editor.
+-- Cria o login (auth.users) + o vínculo (usuarios_app) das 4 pessoas.
+-- Rode depois do 01_schema_rls.sql.
+-- =====================================================================
+
+-- Login é feito digitando só o "usuário" (ex.: alaiane) — o app monta por
+-- baixo dos panos o e-mail sintético "<usuario>@colegioatitude.local".
+-- Ninguém vê esse e-mail, ele só existe pro Supabase Auth entender.
+
+do $$
+declare
+  v_user_id uuid;
+begin
+  -- ---------- Alaiane (solicitante, Bosque) ----------
+  v_user_id := gen_random_uuid();
+  insert into auth.users (
+    instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+    confirmation_token, recovery_token, email_change, email_change_token_new,
+    email_change_token_current, phone_change, phone_change_token, reauthentication_token,
+    raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  ) values (
+    '00000000-0000-0000-0000-000000000000', v_user_id, 'authenticated', 'authenticated',
+    'alaiane@colegioatitude.local', crypt('TROQUE_A_SENHA_ALAIANE', gen_salt('bf')), now(),
+    '', '', '', '', '', '', '', '',
+    '{"provider":"email","providers":["email"]}', '{}', now(), now()
+  );
+  insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+  values (gen_random_uuid(), v_user_id::text, v_user_id,
+    jsonb_build_object('sub', v_user_id::text, 'email', 'alaiane@colegioatitude.local'),
+    'email', now(), now(), now());
+  insert into public.usuarios_app (user_id, nome, papel, unidade)
+  values (v_user_id, 'Alaiane', 'solicitante', 'Bosque');
+
+  -- ---------- Fabiana (solicitante, Horto) ----------
+  v_user_id := gen_random_uuid();
+  insert into auth.users (
+    instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+    confirmation_token, recovery_token, email_change, email_change_token_new,
+    email_change_token_current, phone_change, phone_change_token, reauthentication_token,
+    raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  ) values (
+    '00000000-0000-0000-0000-000000000000', v_user_id, 'authenticated', 'authenticated',
+    'fabiana@colegioatitude.local', crypt('TROQUE_A_SENHA_FABIANA', gen_salt('bf')), now(),
+    '', '', '', '', '', '', '', '',
+    '{"provider":"email","providers":["email"]}', '{}', now(), now()
+  );
+  insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+  values (gen_random_uuid(), v_user_id::text, v_user_id,
+    jsonb_build_object('sub', v_user_id::text, 'email', 'fabiana@colegioatitude.local'),
+    'email', now(), now(), now());
+  insert into public.usuarios_app (user_id, nome, papel, unidade)
+  values (v_user_id, 'Fabiana', 'solicitante', 'Horto');
+
+  -- ---------- Franco (aprovador) ----------
+  v_user_id := gen_random_uuid();
+  insert into auth.users (
+    instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+    confirmation_token, recovery_token, email_change, email_change_token_new,
+    email_change_token_current, phone_change, phone_change_token, reauthentication_token,
+    raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  ) values (
+    '00000000-0000-0000-0000-000000000000', v_user_id, 'authenticated', 'authenticated',
+    'franco@colegioatitude.local', crypt('TROQUE_A_SENHA_FRANCO', gen_salt('bf')), now(),
+    '', '', '', '', '', '', '', '',
+    '{"provider":"email","providers":["email"]}', '{}', now(), now()
+  );
+  insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+  values (gen_random_uuid(), v_user_id::text, v_user_id,
+    jsonb_build_object('sub', v_user_id::text, 'email', 'franco@colegioatitude.local'),
+    'email', now(), now(), now());
+  insert into public.usuarios_app (user_id, nome, papel, unidade)
+  values (v_user_id, 'Franco', 'aprovador', null);
+
+  -- ---------- Victor (RH) ----------
+  v_user_id := gen_random_uuid();
+  insert into auth.users (
+    instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
+    confirmation_token, recovery_token, email_change, email_change_token_new,
+    email_change_token_current, phone_change, phone_change_token, reauthentication_token,
+    raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+  ) values (
+    '00000000-0000-0000-0000-000000000000', v_user_id, 'authenticated', 'authenticated',
+    'victor@colegioatitude.local', crypt('TROQUE_A_SENHA_VICTOR', gen_salt('bf')), now(),
+    '', '', '', '', '', '', '', '',
+    '{"provider":"email","providers":["email"]}', '{}', now(), now()
+  );
+  insert into auth.identities (id, provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at)
+  values (gen_random_uuid(), v_user_id::text, v_user_id,
+    jsonb_build_object('sub', v_user_id::text, 'email', 'victor@colegioatitude.local'),
+    'email', now(), now(), now());
+  insert into public.usuarios_app (user_id, nome, papel, unidade)
+  values (v_user_id, 'Victor', 'rh', null);
+end $$;
+
+-- Depois de rodar, cada pessoa loga digitando só o usuário
+-- (alaiane / fabiana / franco / victor) + a senha que você definiu acima.
+-- Trocar senha depois: Supabase Dashboard -> Authentication -> Users.
