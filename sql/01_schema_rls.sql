@@ -10,7 +10,7 @@ create extension if not exists pgcrypto;
 -- =====================================================================
 -- 1. USUÁRIOS DO APP
 -- -----------------------------------------------------------------------
--- Só existem 4 pessoas hoje (Alaiane, Fabiana, Franco, Victor), mas a
+-- Só existem 4 pessoas hoje (Alaiane, Fabiane, Franco, Victor), mas a
 -- tabela permite cadastrar mais gente no futuro sem mudar o código.
 -- O Supabase Auth só sabe autenticar (auth.users); esta tabela é a ponte
 -- que diz "este login é a Alaiane, e ela é solicitante da unidade Bosque".

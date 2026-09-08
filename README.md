@@ -1,12 +1,12 @@
 # App Requisição de Vagas — Colégio Atitude
 
-Fluxo: Alaiane (Bosque) e Fabiana (Horto) solicitam vaga → Franco aprova ou
+Fluxo: Alaiane (Bosque) e Fabiane (Horto) solicitam vaga → Franco aprova ou
 rejeita → Victor (RH) acompanha tudo num Kanban e usa as aprovadas como
 ponto de partida da triagem.
 
 - **Frontend**: React + Vite (TypeScript), hospedado no GitHub Pages.
 - **Backend**: Supabase (Postgres + Auth + Row Level Security).
-- **Papéis**: solicitante (Alaiane/Fabiana), aprovador (Franco), RH
+- **Papéis**: solicitante (Alaiane/Fabiane), aprovador (Franco), RH
   (Victor) — cada um só acessa o que a policy do banco libera, não é uma
   trava só de tela.
 - **Login**: por usuário simples (ex.: `alaiane`), convertido internamente
@@ -38,7 +38,7 @@ Cada um é uma **nova query** no SQL Editor, colar tudo e **Run**.
 | Ordem | Arquivo | O que faz |
 |---|---|---|
 | 1 | [sql/01_schema_rls.sql](sql/01_schema_rls.sql) | Tabelas, índices, constraints, triggers e todas as policies de RLS. |
-| 2 | [sql/02_criar_usuarios_reais.sql.example](sql/02_criar_usuarios_reais.sql.example) | Cria o login e o vínculo de papel das 4 pessoas (Alaiane, Fabiana, Franco, Victor). |
+| 2 | [sql/02_criar_usuarios_reais.sql.example](sql/02_criar_usuarios_reais.sql.example) | Cria o login e o vínculo de papel das 4 pessoas (Alaiane, Fabiane, Franco, Victor). |
 
 Copie `sql/02_criar_usuarios_reais.sql.example` para
 `sql/02_PRIVADO_criar_usuarios_reais.sql` (esse nome com `_PRIVADO_` fica
@@ -47,7 +47,7 @@ pro GitHub), troque as 4 senhas de exemplo e rode esse arquivo no SQL
 Editor.
 
 Depois de rodar, cada pessoa já pode logar no app digitando só o usuário
-(`alaiane`, `fabiana`, `franco` ou `victor`) e a senha que você definiu.
+(`alaiane`, `fabiane`, `franco` ou `victor`) e a senha que você definiu.
 
 ## 3. Publicar no GitHub Pages
 
